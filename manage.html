@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta name="description"
+        content="Securely manage, edit, reschedule, or delete your scheduled letters to your future self. LetterToFuture offers private, time-capsule messaging and personal journaling." />
+    <meta name="keywords"
+        content="manage letter to future, edit scheduled letter, reschedule future letter, delete letter to future self, time capsule, personal journaling, secure letter management, LetterToFuture" />
+    <meta content="LetterToFuture" name="author" />
+    <link href="logo.png" rel="icon" type="image/png" />
+    <link href="logo.png" rel="apple-touch-icon" />
+    <title>Manage Letters | Letter to Future</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
+    <style type="text/tailwindcss">
+        :root {
+      --brand-primary: #3B82F6;
+      --brand-secondary: #1D4ED8;
+      --background-light: #F9FAFB;
+      --surface-light: #FFFFFF;
+      --text-primary-light: #111827;
+      --text-secondary-light: #6B7280;
+      --border-light: #E5E7EB;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--background-light);
+      color: var(--text-primary-light);
+    }
+    .font-serif {
+      font-family: 'Lora', serif;
+    }
+    .font-handwriting {
+      font-family: 'Dancing Script', cursive;
+    }
+    .bg-brand-primary {
+      background-color: var(--brand-primary);
+    }
+    .hover\:bg-brand-secondary:hover {
+      background-color: var(--brand-secondary);
+    }
+    .text-brand-primary {
+      color: var(--brand-primary);
+    }
+    .hover\:text-brand-secondary:hover {
+      color: var(--brand-secondary);
+    }
+    .focus\:ring-brand-primary:focus {
+      --tw-ring-color: var(--brand-primary);
+    }
+    .bg-surface {
+      background-color: var(--surface-light);
+    }
+    .border-default {
+      border-color: var(--border-light);
+    }
+    .text-secondary {
+      color: var(--text-secondary-light);
+    }
+    .text-primary {
+      color: var(--text-primary-light);
+    }
+  </style>
+</head>
+
+<body class="antialiased min-h-screen flex flex-col">
+    <header class="bg-surface/90 backdrop-blur-lg border-b border-default sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="flex justify-between items-center h-16 sm:h-20">
+                <a aria-label="LetterToFuture homepage" class="flex items-center space-x-2 sm:space-x-3 group" href="/">
+                    <div
+                        class="w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-brand-primary flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:rotate-[-12deg]">
+                        <img src="logo.png" alt="LetterToFuture Logo" class="w-6 h-6 sm:w-8 sm:h-8" />
+                    </div>
+                    <p
+                        class="text-lg sm:text-2xl font-bold font-serif tracking-tight text-primary transition-colors group-hover:text-brand-primary">
+                        LetterToFuture</p>
+                </a>
+                <nav class="hidden md:flex items-center space-x-4 lg:space-x-6" role="navigation">
+                    <a class="text-sm lg:text-base font-medium text-secondary hover:text-brand-primary transition-colors"
+                        href="/">Home</a>
+                    <a class="text-sm lg:text-base font-medium text-secondary hover:text-brand-primary transition-colors"
+                        href="/#about">About</a>
+                    <a class="text-sm lg:text-base font-medium text-secondary hover:text-brand-primary transition-colors"
+                        href="/#privacy">Privacy</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <main class="flex-grow" x-data="manageLetters()" x-init="init()">
+        <section class="py-12 sm:py-20 lg:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-3xl mx-auto text-center">
+                    <h1
+                        class="text-3xl sm:text-4xl lg:text-5xl font-bold font-serif tracking-tight leading-tight text-primary mb-4">
+                        Manage Your Scheduled Letters</h1>
+                    <p class="text-base sm:text-lg text-secondary mb-8">
+                        Securely manage your scheduled letters to your future self. You can edit your letter content,
+                        reschedule the delivery date, or delete your future message. LetterToFuture provides a private,
+                        secure, and easy way to manage your personal time-capsule messages.
+                    </p>
+                </div>
+                <template x-if="loading">
+                    <div class="flex justify-center items-center py-12">
+                        <span class="material-icons animate-spin text-brand-primary text-4xl">autorenew</span>
+                    </div>
+                </template>
+                <template x-if="manageError">
+                    <div class="max-w-xl mx-auto bg-red-100 border border-red-300 text-red-700 rounded-lg p-4 text-center mb-6"
+                        x-text="manageError"></div>
+                </template>
+                <template x-if="!loading && !manageError && letters.length === 0">
+                    <div
+                        class="max-w-xl mx-auto bg-yellow-50 border border-yellow-200 text-yellow-700 rounded-lg p-4 text-center mb-6">
+                        No scheduled letters found for this email.
+                    </div>
+                </template>
+                <div class="max-w-2xl mx-auto space-y-8" x-show="letters.length > 0">
+                    <template x-for="letter in letters" :key="letter.id">
+                        <div class="bg-surface rounded-2xl shadow-lg border border-default p-6 relative">
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                                <div class="mb-4 md:mb-0">
+                                    <h2 class="font-semibold text-lg text-primary mb-1">Delivery Date:</h2>
+                                    <p class="text-secondary mb-2" x-text="formatDate(letter.delivery_date)"></p>
+                                    <h3 class="font-semibold text-lg text-primary mb-1">Letter:</h3>
+                                    <p class="font-serif text-secondary whitespace-pre-line" x-text="letter.letter"></p>
+                                </div>
+                                <div
+                                    class="flex flex-col space-y-2 md:space-y-0 md:space-x-2 md:flex-row md:items-center">
+                                    <button
+                                        class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-xl text-white bg-brand-primary hover:bg-brand-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary transition-all duration-300"
+                                        @click="startEdit(letter)">
+                                        <span class="material-icons mr-1">edit</span>Edit Scheduled Letter
+                                    </button>
+                                    <button
+                                        class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-xl text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400 transition-all duration-300"
+                                        @click="deleteLetter(letter.id)">
+                                        <span class="material-icons mr-1">delete</span>Delete Letter to Future Self
+                                    </button>
+                                </div>
+                            </div>
+                            <template x-if="editLetterId === letter.id">
+                                <div class="mt-6 bg-gray-50 border border-default rounded-xl p-4">
+                                    <h4 class="font-semibold text-primary mb-2">Edit Letter</h4>
+                                    <div class="mb-3">
+                                        <label class="block text-sm font-medium text-secondary mb-1"
+                                            for="editLetterContent">Letter</label>
+                                        <textarea id="editLetterContent"
+                                            class="w-full p-3 border border-default rounded-xl focus:ring-2 focus:ring-brand-primary focus:border-brand-primary transition-shadow duration-200 resize-none text-base leading-7 bg-background-light font-serif text-primary placeholder:text-secondary"
+                                            rows="6" x-model="editLetterContent"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="block text-sm font-medium text-secondary mb-1"
+                                            for="editLetterDate">Delivery Date</label>
+                                        <input id="editLetterDate" type="date"
+                                            class="w-full p-3 border border-default rounded-xl focus:ring-2 focus:ring-brand-primary focus:border-brand-primary transition-shadow duration-200 bg-background-light text-primary"
+                                            x-model="editLetterDate" />
+                                    </div>
+                                    <template x-if="editError">
+                                        <div class="bg-red-100 border border-red-300 text-red-700 rounded-lg p-2 text-center mb-2"
+                                            x-text="editError"></div>
+                                    </template>
+                                    <div class="flex space-x-2 mt-2">
+                                        <button
+                                            class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-xl text-white bg-brand-primary hover:bg-brand-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary transition-all duration-300"
+                                            @click="saveEdit()">
+                                            <span class="material-icons mr-1">save</span>Save Changes
+                                        </button>
+                                        <button
+                                            class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-xl text-secondary bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 transition-all duration-300"
+                                            @click="cancelEdit()">
+                                            <span class="material-icons mr-1">close</span>Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="bg-surface border-t border-default mt-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+            <div
+                class="flex flex-col md:flex-row justify-between items-center text-center md:text-left space-y-4 md:space-y-0">
+                <p class="text-xs sm:text-sm text-secondary">© 2025 LetterToFuture - Your personal time capsule service.
+                </p>
+                <div class="flex items-center space-x-3 sm:space-x-4">
+                    <a class="text-xs sm:text-sm text-secondary hover:text-brand-primary transition-colors"
+                        href="/#terms-of-service" id="terms-of-service">Terms of Service</a>
+                    <a class="text-xs sm:text-sm text-secondary hover:text-brand-primary transition-colors"
+                        href="/#privacy">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        function manageLetters() {
+            return {
+                token: '',
+                loading: true,
+                letters: [],
+                manageError: '',
+                editLetterId: null,
+                editLetterContent: '',
+                editLetterDate: '',
+                editError: '',
+                init() {
+                    const url = new URL(window.location.href);
+                    this.token = url.searchParams.get('token') || '';
+                    if (!this.token) {
+                        this.manageError = 'No token provided. Please use the link from your email.';
+                        this.loading = false;
+                        return;
+                    }
+                    this.fetchLetters();
+                },
+                fetchLetters() {
+                    this.loading = true;
+                    fetch(`/api/letters/manage-verify?token=${encodeURIComponent(this.token)}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.error) {
+                                this.manageError = data.error;
+                                this.letters = [];
+                            } else {
+                                this.letters = data.letters;
+                            }
+                            this.loading = false;
+                        })
+                        .catch(() => {
+                            this.manageError = 'Failed to fetch letters.';
+                            this.loading = false;
+                        });
+                },
+                startEdit(letter) {
+                    this.editLetterId = letter.id;
+                    this.editLetterContent = letter.letter;
+                    this.editLetterDate = letter.delivery_date ? letter.delivery_date.split('T')[0] : '';
+                    this.editError = '';
+                },
+                cancelEdit() {
+                    this.editLetterId = null;
+                    this.editLetterContent = '';
+                    this.editLetterDate = '';
+                    this.editError = '';
+                },
+                saveEdit() {
+                    if (!this.editLetterContent || !this.editLetterDate) {
+                        this.editError = 'All fields are required.';
+                        return;
+                    }
+                    fetch(`/api/letters/${this.editLetterId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${this.token}`
+                        },
+                        body: JSON.stringify({ letter: this.editLetterContent, deliveryDate: this.editLetterDate })
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.error) {
+                                this.editError = data.error;
+                            } else {
+                                // Update the letter in the list
+                                const idx = this.letters.findIndex(l => l.id === this.editLetterId);
+                                if (idx !== -1) {
+                                    this.letters[idx].letter = this.editLetterContent;
+                                    this.letters[idx].delivery_date = this.editLetterDate;
+                                }
+                                this.cancelEdit();
+                            }
+                        })
+                        .catch(() => {
+                            this.editError = 'Failed to update letter.';
+                        });
+                },
+                deleteLetter(id) {
+                    if (!confirm('Are you sure you want to delete this letter?')) return;
+                    fetch(`/api/letters/${id}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': `Bearer ${this.token}`
+                        }
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (!data.error) {
+                                this.letters = this.letters.filter(l => l.id !== id);
+                            } else {
+                                alert(data.error);
+                            }
+                        })
+                        .catch(() => {
+                            alert('Failed to delete letter.');
+                        });
+                },
+                formatDate(dateStr) {
+                    if (!dateStr) return '';
+                    const d = new Date(dateStr);
+                    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
