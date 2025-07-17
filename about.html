@@ -14,11 +14,9 @@
         href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
     <style type="text/tailwindcss">
         :root {
       --brand-primary: #3B82F6;
-      --brand-secondary: #1D4ED8;
       --background-light: #F9FAFB;
       --surface-light: #FFFFFF;
       --text-primary-light: #111827;
@@ -33,23 +31,11 @@
     .font-serif {
       font-family: 'Lora', serif;
     }
-    .font-handwriting {
-      font-family: 'Dancing Script', cursive;
-    }
     .bg-brand-primary {
       background-color: var(--brand-primary);
     }
-    .hover\:bg-brand-secondary:hover {
-      background-color: var(--brand-secondary);
-    }
     .text-brand-primary {
       color: var(--brand-primary);
-    }
-    .hover\:text-brand-secondary:hover {
-      color: var(--brand-secondary);
-    }
-    .focus\:ring-brand-primary:focus {
-      --tw-ring-color: var(--brand-primary);
     }
     .bg-surface {
       background-color: var(--surface-light);
@@ -64,146 +50,37 @@
       color: var(--text-primary-light);
     }
   </style>
-    <meta property="og:title" content="About LetterToFuture | Private Letter to Your Future Self" />
-    <meta property="og:description"
-        content="Learn about LetterToFuture, a privacy-first platform for sending a private letter to your future self. Founded by Abdullah Al Tahir." />
-    <meta property="og:image" content="https://letter-to-future.vercel.app/logo.png" />
-    <meta property="og:url" content="https://letter-to-future.vercel.app/about.html" />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="About LetterToFuture | Private Letter to Your Future Self" />
-    <meta name="twitter:description"
-        content="Learn about LetterToFuture, a privacy-first platform for sending a private letter to your future self. Founded by Abdullah Al Tahir." />
-    <meta name="twitter:image" content="https://letter-to-future.vercel.app/logo.png" />
-    <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "AboutPage",
-    "name": "About LetterToFuture",
-    "description": "Learn about LetterToFuture, a privacy-first platform for sending a private letter to your future self. Founded by Abdullah Al Tahir, hacker, penetration tester, and web developer.",
-    "url": "https://letter-to-future.vercel.app/about.html",
-    "mainEntity": {
-      "@type": "Organization",
-      "name": "LetterToFuture",
-      "url": "https://letter-to-future.vercel.app/",
-      "founder": {
-        "@type": "Person",
-        "name": "Abdullah Al Tahir",
-        "jobTitle": "Hacker, Penetration Tester, Web Developer"
-      }
-    }
-  }
-  </script>
 </head>
 
-<body class="antialiased min-h-screen flex flex-col">
-    <header class="bg-surface/90 backdrop-blur-lg border-b border-default sticky top-0 z-50">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div class="flex justify-between items-center h-16 sm:h-20">
-                <a aria-label="LetterToFuture homepage" class="flex items-center space-x-2 sm:space-x-3 group" href="/">
-                    <div
-                        class="w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-brand-primary flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:rotate-[-12deg]">
-                        <img src="logo.png" alt="LetterToFuture Logo" class="w-6 h-6 sm:w-8 sm:h-8" />
-                    </div>
-                    <p
-                        class="text-lg sm:text-2xl font-bold font-serif tracking-tight text-primary transition-colors group-hover:text-brand-primary">
-                        LetterToFuture</p>
+<body class="antialiased min-h-screen flex flex-col justify-center items-center">
+    <main class="flex-grow flex flex-col items-center justify-center w-full">
+        <h1 class="text-4xl sm:text-5xl font-bold font-serif text-center text-primary mb-10 mt-8">About LetterToFuture
+        </h1>
+        <div class="max-w-xl w-full bg-surface rounded-2xl shadow-lg border border-default p-8 m-4">
+            <h2 class="text-2xl font-bold text-black font-serif mb-4">Our Story</h2>
+            <p class="text-base sm:text-lg text-secondary mb-8">
+                Founded by Abdullah Al Tahir, LetterToFuture was born from a passion for technology, privacy, and
+                personal growth. We believe everyone deserves a safe space to express their hopes, dreams, and goals for
+                the future. Our platform combines strong security with a beautiful, user-friendly experience.
+            </p>
+            <h2 class="text-2xl font-bold text-black font-serif mb-4">Meet the Founder</h2>
+            <div class="flex flex-col items-center mb-4">
+                <img src="avatar.jpg" alt="Abdullah Al Tahir"
+                    class="w-16 h-16 rounded-full shadow-md mb-2 object-cover" />
+                <p class="text-lg font-semibold text-primary">Abdullah Al Tahir</p>
+                <p class="text-secondary">Hacker • Penetration Tester • Web Developer</p>
+            </div>
+            <p class="text-base text-secondary mb-6">Tahir is passionate about building secure, innovative web
+                experiences. With a background in ethical hacking and web development, he ensures LetterToFuture is both
+                safe and delightful for everyone.</p>
+            <div class="text-center mt-8">
+                <a href="https://www.buymeacoffee.com/tahir615" target="_blank"
+                    class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-black bg-yellow-300 hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400 transition-all duration-300">
+                    <span class="material-icons mr-2">local_cafe</span>Buy Me a Coffee
                 </a>
-                <nav class="hidden md:flex items-center space-x-4 lg:space-x-6" role="navigation">
-                    <a class="text-sm lg:text-base font-medium text-secondary hover:text-brand-primary transition-colors"
-                        href="/">Home</a>
-                    <a class="text-sm lg:text-base font-medium text-secondary hover:text-brand-primary transition-colors"
-                        href="/about.html">About</a>
-                    <a class="text-sm lg:text-base font-medium text-secondary hover:text-brand-primary transition-colors"
-                        href="/#privacy">Privacy</a>
-                </nav>
             </div>
         </div>
-    </header>
-    <main class="flex-grow">
-        <section class="py-12 sm:py-20 lg:py-24">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="max-w-3xl mx-auto text-center">
-                    <img src="logo.png" alt="LetterToFuture Logo - Private Letter to Your Future Self"
-                        class="mx-auto mb-6 w-20 h-20 rounded-full shadow-lg" />
-                    <h1
-                        class="text-3xl sm:text-4xl lg:text-5xl font-bold font-serif tracking-tight leading-tight text-primary mb-4">
-                        About LetterToFuture</h1>
-                    <section class="mb-8">
-                        <h2 class="text-2xl font-bold text-black font-serif mb-2">Our Story</h2>
-                        <p class="text-base sm:text-lg text-secondary mb-4">
-                            Founded by Abdullah Al Tahir, LetterToFuture was born from
-                            a passion for technology, privacy, and personal growth. We believe everyone deserves a safe
-                            space to express their hopes, dreams, and goals for the future. Our platform combines strong
-                            security with a beautiful, user-friendly experience.
-                        </p>
-                        <h2 class="text-2xl font-bold text-black font-serif mb-4">Meet the Founder</h2>
-                        <div class="flex flex-col items-center mb-4">
-                            <div class="w-16 h-16 rounded-full bg-brand-primary flex items-center justify-center mb-2">
-                                <span class="material-icons text-white text-3xl">person</span>
-                            </div>
-                            <p class="text-lg font-semibold text-primary">Abdullah Al Tahir</p>
-                            <p class="text-secondary">Hacker • Penetration Tester • Web Developer</p>
-                        </div>
-                        <p class="text-base text-secondary mb-6">Abdullah is passionate about building secure,
-                            innovative
-                            web experiences. With a background in ethical hacking and web development, he ensures
-                            LetterToFuture is both safe and delightful for everyone.</p>
-                        <div class="text-center mt-8">
-                            <a href="https://www.buymeacoffee.com/tahir615" target="_blank"
-                                class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-black bg-yellow-300 hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400 transition-all duration-300">
-                                <span class="material-icons mr-2">local_cafe</span>Buy Me a Coffee
-                            </a>
-                        </div>
-                    </section>
-                </div>
-                <div class="max-w-2xl mx-auto bg-surface rounded-2xl shadow-lg border border-default p-8 mt-8">
-                    <h2 class="text-2xl font-bold text-black font-serif mb-4">Our Story</h2>
-                    <p class="text-base text-secondary mb-6">Founded by Abdullah Al Tahir, LetterToFuture was born from
-                        a passion for technology, privacy, and personal growth. We believe everyone deserves a safe
-                        space to express their hopes, dreams, and goals for the future. Our platform combines strong
-                        security with a beautiful, user-friendly experience.</p>
-                    <h2 class="text-2xl font-bold text-black font-serif mb-4">Meet the Founder</h2>
-                    <div class="flex flex-col items-center mb-4">
-                        <div class="w-16 h-16 rounded-full bg-brand-primary flex items-center justify-center mb-2">
-                            <span class="material-icons text-white text-3xl">person</span>
-                        </div>
-                        <p class="text-lg font-semibold text-primary">Abdullah Al Tahir</p>
-                        <p class="text-secondary">Hacker • Penetration Tester • Web Developer</p>
-                    </div>
-                    <p class="text-base text-secondary mb-6">Abdullah is passionate about building secure, innovative
-                        web experiences. With a background in ethical hacking and web development, he ensures
-                        LetterToFuture is both safe and delightful for everyone.</p>
-                    <div class="text-center mt-8">
-                        <a href="https://www.buymeacoffee.com/tahir615" target="_blank"
-                            class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-black bg-yellow-300 hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400 transition-all duration-300">
-                            <span class="material-icons mr-2">local_cafe</span>Buy Me a Coffee
-                        </a>
-                    </div>
-                </div>
-                <div class="mt-10 text-center text-sm text-secondary">
-                    <a href="/" class="text-brand-primary hover:underline">Back to Home</a> |
-                    <a href="/#faq" class="text-brand-primary hover:underline">FAQ</a> |
-                    <a href="/#privacy" class="text-brand-primary hover:underline">Privacy Policy</a>
-                </div>
-            </div>
-        </section>
     </main>
-    <footer class="bg-surface border-t border-default mt-12">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-            <div
-                class="flex flex-col md:flex-row justify-between items-center text-center md:text-left space-y-4 md:space-y-0">
-                <p class="text-xs sm:text-sm text-secondary">© 2025 LetterToFuture - Your personal time capsule service.
-                </p>
-                <div class="flex items-center space-x-3 sm:space-x-4">
-                    <a class="text-xs sm:text-sm text-secondary hover:text-brand-primary transition-colors"
-                        href="/#terms-of-service" id="terms-of-service">Terms of Service</a>
-                    <a class="text-xs sm:text-sm text-secondary hover:text-brand-primary transition-colors"
-                        href="/#privacy">Privacy Policy</a>
-                </div>
-            </div>
-        </div>
-    </footer>
 </body>
 
 </html>
