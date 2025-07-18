@@ -267,46 +267,39 @@
                             <form @submit.prevent="submitLetter($event)">
                                 <div class="space-y-6 sm:space-y-8">
                                     <div>
-                                        <label class="sr-only" for="letter">Your Letter to Your Future Self</label>
-                                        <textarea aria-describedby="letter-description"
-                                            class="w-full p-4 sm:p-5 border border-default rounded-xl focus:ring-2 focus:ring-brand-primary focus:border-brand-primary transition-shadow duration-200 resize-none text-base leading-7 bg-background-light font-serif text-primary placeholder:text-secondary"
-                                            id="letter" name="letter"
-                                            placeholder="Dearest Future Me, I hope this letter finds you well..."
-                                            required="" rows="12" x-model="letterContent"></textarea>
-                                        <p class="sr-only" id="letter-description">Compose the body of your letter to
-                                            your future self. This is your personal time capsule.</p>
+                                        <label class="sr-only" for="letter">Your Letter to Your Future Self <span class="text-red-500" aria-hidden="true">*</span></label>
+                                        <textarea aria-describedby="letter-description letterError" id="letter" name="letter" required rows="12" x-model="letterContent" :aria-invalid="letterError ? 'true' : 'false'" aria-required="true" class="w-full p-4 sm:p-5 border border-default rounded-xl focus:ring-2 focus:ring-brand-primary focus:border-brand-primary transition-shadow duration-200 resize-none text-base leading-7 bg-background-light font-serif text-primary placeholder:text-secondary"></textarea>
+                                        <p class="sr-only" id="letter-description">Compose the body of your letter to your future self. This is your personal time capsule.</p>
+                                        <template x-if="letterError">
+                                            <div id="letterError" class="text-red-600 text-sm mt-1" aria-live="polite" x-text="letterError"></div>
+                                        </template>
                                     </div>
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
                                         <div>
-                                            <label class="block text-sm font-medium text-secondary mb-2 text-left"
-                                                for="delivery_date">Future Delivery Date</label>
+                                            <label class="block text-sm font-medium text-secondary mb-2 text-left" for="delivery_date">Future Delivery Date <span class="text-red-500" aria-hidden="true">*</span></label>
                                             <div class="relative">
-                                                <span aria-hidden="true"
-                                                    class="material-icons absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-gray-500 text-base sm:text-lg">calendar_today</span>
-                                                <input
-                                                    class="w-full pl-10 sm:pl-12 pr-3 sm:pr-4 py-3 border border-default rounded-xl focus:ring-4 focus:ring-brand-primary/30 focus:border-brand-primary transition-shadow duration-300 bg-background-light text-primary"
-                                                    id="delivery_date" min="" name="delivery_date" required type="date"
-                                                    x-model="deliveryDate" />
+                                                <span aria-hidden="true" class="material-icons absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-gray-500 text-base sm:text-lg">calendar_today</span>
+                                                <input class="w-full pl-10 sm:pl-12 pr-3 sm:pr-4 py-3 border border-default rounded-xl focus:ring-4 focus:ring-brand-primary/30 focus:border-brand-primary transition-shadow duration-300 bg-background-light text-primary" id="delivery_date" min="" name="delivery_date" required type="date" x-model="deliveryDate" :aria-invalid="dateError ? 'true' : 'false'" aria-required="true" aria-describedby="dateError" />
                                                 <button type="button" aria-label="Open calendar"
                                                     class="absolute right-2 top-1/2 -translate-y-1/2 bg-brand-primary hover:bg-brand-secondary text-white rounded-full p-2 shadow-md focus:outline-none focus:ring-2 focus:ring-brand-primary transition-all duration-200"
                                                     onclick="document.getElementById('delivery_date').focus()">
                                                     <span class="material-icons">event</span>
                                                 </button>
                                             </div>
-                                            <p class="text-xs text-secondary mt-1 ml-1">Pick a future date for delivery.
-                                            </p>
+                                            <template x-if="dateError">
+                                                <div id="dateError" class="text-red-600 text-sm mt-1" aria-live="polite" x-text="dateError"></div>
+                                            </template>
+                                            <p class="text-xs text-secondary mt-1 ml-1">Pick a future date for delivery.</p>
                                         </div>
                                         <div>
-                                            <label class="block text-sm font-medium text-secondary mb-2 text-left"
-                                                for="email">Your Current Email</label>
+                                            <label class="block text-sm font-medium text-secondary mb-2 text-left" for="email">Your Current Email <span class="text-red-500" aria-hidden="true">*</span></label>
                                             <div class="relative">
-                                                <span aria-hidden="true"
-                                                    class="material-icons absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-gray-500 text-base sm:text-lg">email</span>
-                                                <input
-                                                    class="w-full pl-10 sm:pl-12 pr-3 sm:pr-4 py-3 border border-default rounded-xl focus:ring-2 focus:ring-brand-primary focus:border-brand-primary transition-shadow duration-200 bg-background-light text-primary placeholder:text-secondary"
-                                                    id="email" name="email" placeholder="you@example.com" required=""
-                                                    type="email" x-model="email" />
+                                                <span aria-hidden="true" class="material-icons absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-gray-500 text-base sm:text-lg">email</span>
+                                                <input class="w-full pl-10 sm:pl-12 pr-3 sm:pr-4 py-3 border border-default rounded-xl focus:ring-2 focus:ring-brand-primary focus:border-brand-primary transition-shadow duration-200 bg-background-light text-primary placeholder:text-secondary" id="email" name="email" placeholder="you@example.com" required type="email" x-model="email" :aria-invalid="emailError ? 'true' : 'false'" aria-required="true" aria-describedby="emailError" />
                                             </div>
+                                            <template x-if="emailError">
+                                                <div id="emailError" class="text-red-600 text-sm mt-1" aria-live="polite" x-text="emailError"></div>
+                                            </template>
                                         </div>
                                     </div>
                                     <div class="flex items-start text-left">
@@ -347,16 +340,15 @@
                             and manage your pending messages.</p>
                     </div>
                     <div class="mt-8 sm:mt-12 lg:mt-16 max-w-xl mx-auto">
-                        <form action="#" class="flex flex-col sm:flex-row gap-3 sm:gap-4" method="POST">
+                        <form action="#" class="flex flex-col sm:flex-row gap-3 sm:gap-4" method="POST" @submit.prevent="submitManageEmail($event)">
                             <div class="flex-grow relative">
-                                <label class="sr-only" for="manage_email">Your Email Address</label>
-                                <span aria-hidden="true"
-                                    class="material-icons absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-gray-500">email</span>
-                                <input
-                                    class="w-full pl-10 sm:pl-12 pr-4 py-3 sm:py-4 border border-default rounded-xl focus:ring-2 focus:ring-brand-primary focus:border-brand-primary transition-shadow duration-200 bg-background-light text-primary placeholder:text-secondary"
-                                    id="manage_email" name="manage_email" placeholder="you@example.com" required=""
-                                    type="email" />
+                                <label class="sr-only" for="manage_email">Your Email Address <span class="text-red-500" aria-hidden="true">*</span></label>
+                                <span aria-hidden="true" class="material-icons absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-gray-500">email</span>
+                                <input class="w-full pl-10 sm:pl-12 pr-4 py-3 sm:py-4 border border-default rounded-xl focus:ring-2 focus:ring-brand-primary focus:border-brand-primary transition-shadow duration-200 bg-background-light text-primary placeholder:text-secondary" id="manage_email" name="manage_email" placeholder="you@example.com" required type="email" x-model="manageEmail" :aria-invalid="manageEmailError ? 'true' : 'false'" aria-required="true" aria-describedby="manageEmailError" />
                             </div>
+                            <template x-if="manageEmailError">
+                                <div id="manageEmailError" class="text-red-600 text-sm mt-1" aria-live="polite" x-text="manageEmailError"></div>
+                            </template>
                             <button
                                 class="w-full sm:w-auto inline-flex shrink-0 items-center justify-center px-6 py-3 sm:px-8 sm:py-4 border border-transparent text-sm sm:text-base font-medium rounded-xl text-white bg-brand-primary hover:bg-brand-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-surface focus:ring-brand-primary transition-all duration-300 shadow-lg"
                                 type="submit">
@@ -575,14 +567,28 @@
                 letterContent: '',
                 letterSnippet: '',
                 error: '',
+                letterError: '',
+                dateError: '',
+                emailError: '',
                 async submitLetter($event) {
                     this.error = '';
+                    this.letterError = '';
+                    this.dateError = '';
+                    this.emailError = '';
                     const form = $event.target;
                     const email = form.elements.email.value;
                     const deliveryDate = form.elements.delivery_date.value;
                     const letter = form.elements.letter.value;
                     if (!email || !deliveryDate || !letter) {
                         this.error = 'All fields are required.';
+                        return;
+                    }
+                    if (!this.validateEmail(email)) {
+                        this.emailError = 'Please enter a valid email address.';
+                        return;
+                    }
+                    if (new Date(deliveryDate) < new Date()) {
+                        this.dateError = 'Delivery date must be in the future.';
                         return;
                     }
                     try {
@@ -607,6 +613,10 @@
                         this.error = 'Failed to schedule letter. Please try again.';
                     }
                 },
+                validateEmail(email) {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    return emailRegex.test(email);
+                }
             }
         }
 
@@ -621,6 +631,7 @@
                 letters: [],
                 manageError: '',
                 manageEmail: '',
+                manageEmailError: '',
                 fetchLetters() {
                     this.loading = true;
                     fetch(`/api/letters/manage-verify?token=${encodeURIComponent(this.token)}`)
@@ -736,6 +747,41 @@
                             alert('Failed to delete letter.');
                         });
                 },
+                async submitManageEmail($event) {
+                    this.manageEmailError = '';
+                    const email = this.manageEmail;
+                    if (!email) {
+                        this.manageEmailError = 'Email is required.';
+                        return;
+                    }
+                    if (!this.validateEmail(email)) {
+                        this.manageEmailError = 'Please enter a valid email address.';
+                        return;
+                    }
+                    this.loading = true;
+                    try {
+                        const res = await fetch('/api/letters/manage-request', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ email })
+                        });
+                        if (!res.ok) {
+                            const data = await res.json().catch(() => ({}));
+                            this.manageError = data.error || 'Failed to send management link.';
+                        } else {
+                            this.requestSuccess = true;
+                            this.manageError = 'Management link sent to your email.';
+                        }
+                    } catch (err) {
+                        this.manageError = 'Failed to send management link.';
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+                validateEmail(email) {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    return emailRegex.test(email);
+                }
             }
         }
 

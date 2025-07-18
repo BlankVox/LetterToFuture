@@ -149,18 +149,25 @@
                                 <div class="mt-6 bg-gray-50 border border-default rounded-xl p-4">
                                     <h4 class="font-semibold text-primary mb-2">Edit Letter</h4>
                                     <div class="mb-3">
-                                        <label class="block text-sm font-medium text-secondary mb-1"
-                                            for="editLetterContent">Letter</label>
+                                        <label class="block text-sm font-medium text-secondary mb-1" for="editLetterContent">Letter <span class="text-red-500" aria-hidden="true">*</span></label>
                                         <textarea id="editLetterContent"
                                             class="w-full p-3 border border-default rounded-xl focus:ring-2 focus:ring-brand-primary focus:border-brand-primary transition-shadow duration-200 resize-none text-base leading-7 bg-background-light font-serif text-primary placeholder:text-secondary"
-                                            rows="6" x-model="editLetterContent"></textarea>
+                                            rows="6" x-model="editLetterContent" :aria-invalid="editError && !editLetterContent ? 'true' : 'false'" aria-required="true" aria-describedby="editLetterContentError" required></textarea>
+                                        <template x-if="editError && !editLetterContent">
+                                            <div id="editLetterContentError" class="text-red-600 text-sm mt-1" aria-live="polite">Letter content is required.</div>
+                                        </template>
                                     </div>
                                     <div class="mb-3">
-                                        <label class="block text-sm font-medium text-secondary mb-1"
-                                            for="editLetterDate">Delivery Date</label>
+                                        <label class="block text-sm font-medium text-secondary mb-1" for="editLetterDate">Delivery Date <span class="text-red-500" aria-hidden="true">*</span></label>
                                         <input id="editLetterDate" type="date"
                                             class="w-full p-3 border border-default rounded-xl focus:ring-2 focus:ring-brand-primary focus:border-brand-primary transition-shadow duration-200 bg-background-light text-primary"
-                                            x-model="editLetterDate" />
+                                            x-model="editLetterDate" :aria-invalid="editError && !editLetterDate ? 'true' : 'false'" aria-required="true" aria-describedby="editLetterDateError" required />
+                                        <template x-if="editError && !editLetterDate">
+                                            <div id="editLetterDateError" class="text-red-600 text-sm mt-1" aria-live="polite">Delivery date is required.</div>
+                                        </template>
+                                        <template x-if="editError && editLetterDate && !isFutureDate(editLetterDate)">
+                                            <div id="editLetterDateError" class="text-red-600 text-sm mt-1" aria-live="polite">Delivery date must be in the future.</div>
+                                        </template>
                                     </div>
                                     <template x-if="editError">
                                         <div class="bg-red-100 border border-red-300 text-red-700 rounded-lg p-2 text-center mb-2"
@@ -254,8 +261,17 @@
                     this.editError = '';
                 },
                 saveEdit() {
-                    if (!this.editLetterContent || !this.editLetterDate) {
-                        this.editError = 'All fields are required.';
+                    this.editError = '';
+                    if (!this.editLetterContent) {
+                        this.editError = 'Letter content is required.';
+                        return;
+                    }
+                    if (!this.editLetterDate) {
+                        this.editError = 'Delivery date is required.';
+                        return;
+                    }
+                    if (!this.isFutureDate(this.editLetterDate)) {
+                        this.editError = 'Delivery date must be in the future.';
                         return;
                     }
                     fetch(`/api/letters/${this.editLetterId}`, {
@@ -308,6 +324,12 @@
                     if (!dateStr) return '';
                     const d = new Date(dateStr);
                     return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                },
+                isFutureDate(dateStr) {
+                    const today = new Date();
+                    today.setHours(0,0,0,0);
+                    const inputDate = new Date(dateStr);
+                    return inputDate > today;
                 }
             }
         }
